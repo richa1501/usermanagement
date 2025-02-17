@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Inputfield from "../commoncontrols/inputfield";
 import Button from "../commoncontrols/button";
+import "./LoginSignup.css";
 import { useNavigate, Link } from "react-router-dom";
 
 
@@ -35,6 +36,14 @@ function LoginSignup() {
     else {
       console.log("error")
     }
+    // Reset form after successful submission
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      rememberMe: false,
+    });
     navigate("home");
   };
 
@@ -52,7 +61,7 @@ function LoginSignup() {
     ];
 
   return (
-    <div className="from-container">
+    <div className="form-container">
       <h2>{isLogin ? "Login" : "Sign Up"}</h2>
       <form onSubmit={handleSubmit}>
         {/* Dynamically render input fields */}
@@ -67,7 +76,7 @@ function LoginSignup() {
           />
         ))}
         {isLogin && (
-          <div className="extras">
+          <div className="addfield">
             <label>
               <input type="checkbox" name="rememberMe" check={formData.rememberMe} onChange={handleChange} />
               Remember Me

@@ -24,7 +24,7 @@
   /* Placeholder Text Styles */
   .input-field::placeholder {
     color: #aaa;            /* Light gray color for placeholder text */
-    font-style: italic;      /* Italicize the placeholder text */
+    font-style: none;      
   }
   
   /* Hover Styles */
