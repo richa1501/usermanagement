@@ -1,5 +1,5 @@
 import React from "react";
-import "./inputfield.css";
+import "./Inputfield.css";
 function Inputfield({ name, value, placeholder, type = "text", onChange }) {
   return (
 

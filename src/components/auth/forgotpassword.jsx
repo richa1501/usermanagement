@@ -2,15 +2,20 @@ import React, {useState} from 'react';
 import Inputfield from '../commoncontrols/Inputfield';
 import Button from '../commoncontrols/Button';
 import { useNavigate } from "react-router-dom";
+import './ForgotPassword.css';
 
-
+const Inputfields = [
+  { name: "username", placeholder: "Enter your username", type: "text" },
+  { name: "password", placeholder: "Enter new password", type: "password" },
+  { name: "confirmPassword", placeholder: "Confirm new password", type: "password" }
+];
  
 function ForgotPassword() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
       username: "",
-      newPassword: "",
-      confirmNewPassword: "",
+      password: "",
+      confirmPassword: "",
     });
 
     const [message, setMessage] = useState("");
@@ -33,7 +38,7 @@ function ForgotPassword() {
     setFormData({
       username: "",     
       password: "",
-      confirmNewPassword: "",      
+      confirmPassword: "",      
     });
     //navigate("home");
       setTimeout(() => navigate("/"), 2000);
@@ -58,7 +63,7 @@ function ForgotPassword() {
           />
         ))}
         </div>
-        <Button type="submit" text={"Reset Password"} variant="outline" />
+        <Button type="submit" text={"Reset Password"} variant="outline"  />
       </form>
     </div>
   )

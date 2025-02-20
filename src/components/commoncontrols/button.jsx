@@ -1,5 +1,5 @@
 import React from "react";
-import "./button.css"; // Import your button styles
+import "./Button.css"; // Import your button styles
 
 const Button = ({
   value = "Click Me",   // Default text

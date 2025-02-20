@@ -32,8 +32,17 @@
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
+  .error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+
   
   /* Button Styling */
+
+
   button {
     width: 100%;
     padding: 12px;
@@ -45,10 +54,16 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  button:disabled {
+    background-color: #d85252;
+    cursor: not-allowed;
+  }
   
   button:hover {
     background: #0056b3;
   }
+
+ 
   
   /* Remember Me & Forgot Password */
   .addfield {
