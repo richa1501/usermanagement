@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Inputfield from "../commoncontrols/inputfield";
-import Button from "../commoncontrols/button";
+import Inputfield from "../commoncontrols/Inputfield";
+import Button from "../commoncontrols/Button";
 import "./LoginSignup.css";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -13,15 +13,15 @@ function LoginSignup() {
     email: "",
     password: "",
     confirmPassword: "",
-    rememberMe: "false"
+    rememberMe: false
   });
 
   // Handles input changes dynamically
   const handleChange = (e) => {
-    const { name, value, type, check } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === "checkbox" ? check : value,
+      [name]: type === "checkbox" ? checked : value
 
     }));
   };
@@ -78,15 +78,14 @@ function LoginSignup() {
         {isLogin && (
           <div className="addfield">
             <label>
-              <input type="checkbox" name="rememberMe" check={formData.rememberMe} onChange={handleChange} />
+            <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChange} />
               Remember Me
             </label>
             <Link to="/forgot-password" className="forgot-password">Forgot Password?</Link>
           </div>
         )}
 
-        <Button
-          type="submit" text={isLogin ? "Login" : "Sign Up"} variant="outline" />
+        <Button type="submit" text={isLogin ? "Login" : "Sign Up"} variant="outline" />
       </form>
       <p className="toggle-link">
         {isLogin ? (
