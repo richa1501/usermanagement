@@ -1,44 +1,37 @@
-export const validateForm = (formData, isSignup, isLogin = false, isForgotPassword = false) => {
-    let errors = {};
-  
-    // Email validation (common for all forms)
-    if (!formData.email || formData.email.trim() === "") {
-      errors.email = "Email is required";
-    } else {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(formData.email)) {
-        errors.email = "Enter a valid email address";
-      }
+
+export const validateForm = (formData, isSignup) => {
+  let errors = {};
+
+  // Check email
+  if (!formData.email.trim()) {
+    errors.email = "Email is required.";
+  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    errors.email = "Invalid email format.";
+  }
+
+  // Check password
+  if (!formData.password.trim()) {
+    errors.password = "Password is required.";
+  } else if (formData.password.length < 6) {
+    errors.password = "Password must be at least 6 characters.";
+  }
+
+  // Additional validations for Signup
+  if (isSignup) {
+    if (!formData.username.trim()) {
+      errors.username = "Username is required.";
     }
-  
-    // Username validation (common for all forms)
-    if (!formData.username || formData.username.trim() === "") {
-      errors.username = "Username is required";
+
+    if (!formData.confirmPassword.trim()) {
+      errors.confirmPassword = "Confirm Password is required.";
+    } else if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match.";
     }
-  
-    // Password validation (Signup and Forgot Password)
-    if (isSignup || isLogin || isForgotPassword) {
-      if (!formData.password || formData.password.trim() === "") {
-        errors.password = "Password is required";
-      } else {
-        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordPattern.test(formData.password)) {
-          errors.password = "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.";
-        }
-      }
-    }
-  
-    // Confirm Password validation (only for Signup and Forgot Password)
-    if (isSignup || isForgotPassword) {
-      if (!formData.confirmPassword || formData.confirmPassword.trim() === "") {
-        errors.confirmPassword = "Confirm password is required";
-      } else if (formData.password !== formData.confirmPassword) {
-        errors.confirmPassword = "Passwords do not match";
-      }
-    }
-  
-    return errors;
-  };
+  }
+
+  return errors;
+};
+
   
   // Real-time input validation
   export const validateInput = (name, value) => {

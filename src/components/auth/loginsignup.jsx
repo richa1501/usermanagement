@@ -3,7 +3,8 @@ import Inputfield from "../commoncontrols/Inputfield";
 import Button from "../commoncontrols/Button";
 import "./LoginSignup.css";
 import { useNavigate, Link } from "react-router-dom";
-import { validateForm, validateInput } from "../../utils/Validation";
+import {validateForm} from "../../utils/Validation";
+
 
 
 function LoginSignup() {
@@ -16,8 +17,8 @@ function LoginSignup() {
     confirmPassword: "",
     rememberMe: false
   });
-  const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
+   const [errors,setErrors]=useState({});
+   //const [message,setMessage]= useState("");
 
   // Handles input changes dynamically
   const handleChange = (e) => {
@@ -27,38 +28,30 @@ function LoginSignup() {
       [name]: type === "checkbox" ? checked : value
 
     }));
-    const error =validateInput (name,value);
-    setErrors((prevErrors)=> ({...prevErrors,[name]:error}));
+    
   };
   // Handle form submisssion
   const handleSubmit = (event) => {
-    console.log(formData, "formData");
     // Authenticate user login 
     event.preventDefault();
-     // Validate form data
-     const formValidation = validateForm(formData, !isLogin, false);
-     setErrors(formValidation);
- 
-     // If there are validation errors, prevent submission
-     if (Object.keys(formValidation).length > 0) {
-       setMessage("Please correct the errors before submitting.");
-       return;
-     }
-    if (isLogin) {
-      console.log("login sucessful")
+    console.log(formData, "formData");   
+    const errors = validateForm(formData, !isLogin);
+    if (Object.keys(errors).length > 0) {
+      console.log("Validation errors:", errors);
+      setErrors(errors);
+      return;
     }
-    else {
-      console.log("error")
-    }
-    // Reset form after successful submission
-    setFormData({
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      rememberMe: false,
-    });
-    navigate("home");
+      // Simulate signup success
+      console.log( isLogin? "Login Sucessfull":"Signup successful");
+      //setMessage("Signup successful! Redirecting to login...");
+      setTimeout(() => {
+        setIsLogin(!isLogin); // Switch to login form
+        navigate(isLogin?"home":"/"); // Redirect to login page
+      },isLogin?0:500); // Delay to show success message before navigation
+  
+  
+   
+   
   };
 
   // Conditionaly Renders Array for input fields for login or signup
@@ -73,18 +66,16 @@ function LoginSignup() {
       { name: "password", placeholder: "Enter your Password", type: "password" },
       { name: "confirmPassword", placeholder: "Re-enter your Password", type: "password" }
     ];
-    // If form is invalid disable submit button 
-    const isFormValid = Object.values(errors).every((err) => err === "") &&
-    Object.values(formData).every((value) => value.trim() !== "");
+    
 
   return (
     <div className="form-container">
       <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-      {message && <p className="message">{message}</p>}
+      
       <form onSubmit={handleSubmit}>
         {/* Dynamically render input fields */}
         {Inputfields.map((field) => (
-          <div>
+       <div key={field.name}>
           <Inputfield
             key={field.name}
             name={field.name}
@@ -94,6 +85,7 @@ function LoginSignup() {
             onChange={handleChange}
           />
           {errors[field.name] && <p className="error-text">{errors[field.name]}</p>}
+   
           </div>
         ))}
         {isLogin && (
@@ -106,7 +98,7 @@ function LoginSignup() {
           </div>
         )}
 
-        <Button type="submit" text={isLogin ? "Login" : "Sign Up"} variant="outline" disabled={!isFormValid}  />
+        <Button type="submit" text={isLogin ? "Login" : "Sign Up"} variant="outline" />
       </form>
       <p className="toggle-link">
         {isLogin ? (
